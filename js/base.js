@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const ruleForm = document.getElementById('rule-form');
   const newRuleInput = document.getElementById('new-rule');
   const ruleList = document.getElementById('rule-list');
-
   let savedRules = JSON.parse(localStorage.getItem('rules')) || [];
 
   ruleForm.addEventListener('submit', (e) => {
@@ -36,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!ruleText) return;
 
     const li = document.createElement('li');
+    li.classList.add('list-item');
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
 
@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     li.appendChild(document.createTextNode(' ' + ruleText));
 
     const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
     deleteBtn.textContent = '🗑';
     deleteBtn.addEventListener('click', () => {
       const index = Array.from(ruleList.children).indexOf(li);
@@ -64,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const todoForm = document.getElementById('todo-form');
   const newTodoInput = document.getElementById('new-todo');
   const todoList = document.getElementById('todo-list');
-
   let todos = JSON.parse(localStorage.getItem('todos')) || [];
 
   todoForm.addEventListener('submit', (e) => {
@@ -73,9 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!todoText) return;
 
     const li = document.createElement('li');
+    li.classList.add('list-item');
     li.textContent = todoText;
 
     const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
     deleteBtn.textContent = '🗑';
     deleteBtn.addEventListener('click', () => {
       const index = Array.from(todoList.children).indexOf(li);
@@ -92,9 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     newTodoInput.value = '';
   });
+
   // ===== Load saved rules =====
   savedRules.forEach(rule => {
     const li = document.createElement('li');
+    li.classList.add('list-item');
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = rule.done;
@@ -108,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     li.appendChild(document.createTextNode(' ' + rule.text));
 
     const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
     deleteBtn.textContent = '🗑';
     deleteBtn.addEventListener('click', () => {
       const index = Array.from(ruleList.children).indexOf(li);
@@ -123,9 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== Load saved todos =====
   todos.forEach(todo => {
     const li = document.createElement('li');
+    li.classList.add('list-item');
     li.textContent = todo;
 
     const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
     deleteBtn.textContent = '🗑';
     deleteBtn.addEventListener('click', () => {
       const index = Array.from(todoList.children).indexOf(li);

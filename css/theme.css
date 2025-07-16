@@ -1,10 +1,16 @@
-@media (max-width: 600px) {
-  form {
-    flex-direction: column;
-  }
-
-  header, footer {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+:root {
+  --bg: #f7f7f7;
+  --text: #111;
+  --border: #ccc;
+  --card-bg: #fff;
+  --input-bg: #fff;
+  --accent: #007bff;
+}
+[data-theme="dark"] {
+  --bg: #121212;
+  --text: #eee;
+  --border: #444;
+  --card-bg: #1e1e1e;
+  --input-bg: #1e1e1e;
+  --accent: #4dabf7;
 }
