@@ -1,12 +1,62 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>My First Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockLife Todo</title>
+  <link rel="stylesheet" href="style/base.css" />
+  <link rel="stylesheet" href="style/theme.css" />
+  <link rel="stylesheet" href="style/responsive.css" />
 </head>
-<body>
-  <h1>こんにちは、GitHub Pages！</h1>
-  <p>これは私のはじめての公開Webページです。</p>
+<body data-theme="light">
+  <header>
+    <h1>📊 StockLife Todo</h1>
+    <button id="theme-toggle">🌙 ダークモード</button>
+  </header>
+
+  <main>
+    <!-- 資産記録セクション -->
+    <section id="asset-section">
+      <h2>💰 資産の記録</h2>
+      <form id="asset-form">
+        <label for="asset-amount">資産額：</label>
+        <input type="number" id="asset-amount" required />
+        <label for="asset-memo">メモ：</label>
+        <input type="text" id="asset-memo" placeholder="上昇理由など" />
+        <button type="submit">保存</button>
+      </form>
+      <canvas id="asset-chart"></canvas>
+    </section>
+
+    <!-- 自己ルールチェックセクション -->
+    <section id="rule-section">
+      <h2>✅ 今日の自己ルール</h2>
+      <ul id="rule-list">
+        <!-- JSでルールを表示・チェックボックス生成 -->
+      </ul>
+      <form id="rule-form">
+        <input type="text" id="new-rule" placeholder="ルールを追加" />
+        <button type="submit">追加</button>
+      </form>
+    </section>
+
+    <!-- 明日やることセクション -->
+    <section id="todo-section">
+      <h2>📅 明日のTODO</h2>
+      <ul id="todo-list">
+        <!-- JSでタスク表示 -->
+      </ul>
+      <form id="todo-form">
+        <input type="text" id="new-todo" placeholder="明日の予定を入力" />
+        <button type="submit">追加</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 StockLife</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

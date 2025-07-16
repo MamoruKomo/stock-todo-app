@@ -1,0 +1,10 @@
+@media (max-width: 600px) {
+  form {
+    flex-direction: column;
+  }
+
+  header, footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
