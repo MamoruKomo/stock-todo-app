@@ -83,7 +83,7 @@ function setupRuleSection() {
       list.appendChild(li);
 
       const highlightLi = document.createElement('li');
-      highlightLi.textContent = `✅ ${rule.text}`;
+      highlightLi.textContent = ` ${rule.text}`;
       highlightList.appendChild(highlightLi);
     });
   }
