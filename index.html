@@ -5,18 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StockLife Todo</title>
   <link rel="stylesheet" href="style/base.css" />
-  <link rel="stylesheet" href="style/theme.css" />
-  <link rel="stylesheet" href="style/responsive.css" />
   <link rel="stylesheet" href="css/app.css" />
 </head>
 <body data-theme="light">
-  <!-- TODO: Add theme switching script logic in js/app.js -->
-  <header>
-    <h1>📊 StockLife Todo</h1>
-    <button id="theme-toggle">🌙 ダークモード</button>
-  </header>
-
   <main>
+    <header>
+      <h1>📊 StockLife Todo</h1>
+      <button id="theme-toggle">🌙 ダークモード</button>
+    </header>
     <!-- 資産記録セクション -->
     <section id="asset-section">
       <h2>💰 資産の記録</h2>
@@ -56,9 +52,8 @@
   </main>
 
 
-  <script type="module" src="js/app.js"></script>
-  <!-- TODO: Add Chart.js integration for asset graph -->
-  <!-- TODO: Implement rule checkbox logic -->
-  <!-- TODO: Implement tomorrow's TODO list add/remove functionality -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="js/asset.js"></script>
+  <script type="module" src="js/base.js"></script>
 </body>
 </html>

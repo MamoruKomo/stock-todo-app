@@ -1,4 +1,10 @@
+import { initAssetChart, updateAssetChart } from './asset.js';
+import { initTheme } from './theme.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  initAssetChart();
+
   // ===== 資産入力セクション =====
   const assetForm = document.getElementById('asset-form');
   const assetAmountInput = document.getElementById('asset-amount');
@@ -10,17 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const memo = assetMemoInput.value;
     const date = new Date().toISOString().split('T')[0];
 
-    const assetData = {
-      date,
-      amount,
-      memo,
-    };
-
+    const assetData = { date, amount, memo };
     console.log('💰 資産データ:', assetData);
+
     let assetHistory = JSON.parse(localStorage.getItem('assets')) || [];
     assetHistory.push(assetData);
     localStorage.setItem('assets', JSON.stringify(assetHistory));
-    // TODO: update chart
+    updateAssetChart();
   });
 
   // ===== ルールチェックセクション =====
@@ -29,37 +31,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const ruleList = document.getElementById('rule-list');
   let savedRules = JSON.parse(localStorage.getItem('rules')) || [];
 
-  ruleForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const ruleText = newRuleInput.value.trim();
-    if (!ruleText) return;
-
+  function renderRule(rule, index) {
     const li = document.createElement('li');
     li.classList.add('list-item');
+
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    checkbox.checked = rule.done;
+    checkbox.addEventListener('change', () => {
+      savedRules[index].done = checkbox.checked;
+      localStorage.setItem('rules', JSON.stringify(savedRules));
+    });
 
-    li.appendChild(checkbox);
-    li.appendChild(document.createTextNode(' ' + ruleText));
+    const text = document.createTextNode(' ' + rule.text);
 
     const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-btn');
     deleteBtn.textContent = '🗑';
     deleteBtn.addEventListener('click', () => {
-      const index = Array.from(ruleList.children).indexOf(li);
       savedRules.splice(index, 1);
       localStorage.setItem('rules', JSON.stringify(savedRules));
-      ruleList.removeChild(li);
+      renderAllRules();
     });
-    li.appendChild(deleteBtn);
 
-    ruleList.appendChild(li);
+    li.appendChild(checkbox);
+    li.appendChild(text);
+    li.appendChild(deleteBtn);
+    return li;
+  }
+
+  function renderAllRules() {
+    ruleList.innerHTML = '';
+    savedRules.forEach((rule, i) => {
+      ruleList.appendChild(renderRule(rule, i));
+    });
+  }
+
+  ruleForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const ruleText = newRuleInput.value.trim();
+    if (!ruleText) return;
 
     savedRules.push({ text: ruleText, done: false });
     localStorage.setItem('rules', JSON.stringify(savedRules));
-
+    renderAllRules();
     newRuleInput.value = '';
   });
+
+  renderAllRules();
 
   // ===== 明日のTODOセクション =====
   const todoForm = document.getElementById('todo-form');
@@ -72,76 +91,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const todoText = newTodoInput.value.trim();
     if (!todoText) return;
 
-    const li = document.createElement('li');
-    li.classList.add('list-item');
-    li.textContent = todoText;
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.textContent = '🗑';
-    deleteBtn.addEventListener('click', () => {
-      const index = Array.from(todoList.children).indexOf(li);
-      todos.splice(index, 1);
-      localStorage.setItem('todos', JSON.stringify(todos));
-      todoList.removeChild(li);
-    });
-    li.appendChild(deleteBtn);
-
-    todoList.appendChild(li);
-
     todos.push(todoText);
     localStorage.setItem('todos', JSON.stringify(todos));
-
+    renderTodos();
     newTodoInput.value = '';
   });
 
-  // ===== Load saved rules =====
-  savedRules.forEach(rule => {
-    const li = document.createElement('li');
-    li.classList.add('list-item');
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = rule.done;
+  function renderTodos() {
+    todoList.innerHTML = '';
+    todos.forEach((todo, index) => {
+      const li = document.createElement('li');
+      li.classList.add('list-item');
+      li.textContent = todo;
 
-    checkbox.addEventListener('change', () => {
-      rule.done = checkbox.checked;
-      localStorage.setItem('rules', JSON.stringify(savedRules));
+      const deleteBtn = document.createElement('button');
+      deleteBtn.classList.add('delete-btn');
+      deleteBtn.textContent = '🗑';
+      deleteBtn.addEventListener('click', () => {
+        todos.splice(index, 1);
+        localStorage.setItem('todos', JSON.stringify(todos));
+        renderTodos();
+      });
+
+      li.appendChild(deleteBtn);
+      todoList.appendChild(li);
     });
+  }
 
-    li.appendChild(checkbox);
-    li.appendChild(document.createTextNode(' ' + rule.text));
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.textContent = '🗑';
-    deleteBtn.addEventListener('click', () => {
-      const index = Array.from(ruleList.children).indexOf(li);
-      savedRules.splice(index, 1);
-      localStorage.setItem('rules', JSON.stringify(savedRules));
-      ruleList.removeChild(li);
-    });
-    li.appendChild(deleteBtn);
-
-    ruleList.appendChild(li);
-  });
-
-  // ===== Load saved todos =====
-  todos.forEach(todo => {
-    const li = document.createElement('li');
-    li.classList.add('list-item');
-    li.textContent = todo;
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-btn');
-    deleteBtn.textContent = '🗑';
-    deleteBtn.addEventListener('click', () => {
-      const index = Array.from(todoList.children).indexOf(li);
-      todos.splice(index, 1);
-      localStorage.setItem('todos', JSON.stringify(todos));
-      todoList.removeChild(li);
-    });
-    li.appendChild(deleteBtn);
-
-    todoList.appendChild(li);
-  });
+  renderTodos();
 });
