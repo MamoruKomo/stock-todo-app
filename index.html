@@ -4,56 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StockLife Todo</title>
-  <link rel="stylesheet" href="style/base.css" />
   <link rel="stylesheet" href="css/app.css" />
 </head>
 <body data-theme="light">
+  <div id="highlight-rule" class="highlight-rule">
+    <ul id="highlight-rule-list"></ul>
+  </div>
+
+  <header>
+    <h1>📊 StockLife Todo</h1>
+    <button id="theme-toggle">🌙 ダークモード</button>
+  </header>
+
   <main>
-    <header>
-      <h1>📊 StockLife Todo</h1>
-      <button id="theme-toggle">🌙 ダークモード</button>
-    </header>
     <!-- 資産記録セクション -->
     <section id="asset-section">
       <h2>💰 資産の記録</h2>
       <form id="asset-form">
+        <label for="asset-date">日付：</label>
+        <input type="date" id="asset-date" required />
         <label for="asset-amount">資産額：</label>
         <input type="number" id="asset-amount" required />
-        <label for="asset-memo">メモ：</label>
-        <input type="text" id="asset-memo" placeholder="上昇理由など" />
         <button type="submit">保存</button>
       </form>
       <canvas id="asset-chart"></canvas>
     </section>
 
-    <!-- 自己ルールチェックセクション -->
-    <section id="rule-section">
-      <h2>✅ 今日の自己ルール</h2>
-      <ul id="rule-list" class="item-list">
-        <!-- JSでルールを表示・チェックボックス生成 -->
-      </ul>
-      <form id="rule-form">
-        <input type="text" id="new-rule" placeholder="ルールを追加" />
-        <button type="submit">追加</button>
-      </form>
-    </section>
-
     <!-- 明日やることセクション -->
     <section id="todo-section">
       <h2>📅 明日のTODO</h2>
-      <ul id="todo-list" class="item-list">
-        <!-- JSでタスク表示 -->
-      </ul>
+      <ul id="todo-list" class="item-list"></ul>
       <form id="todo-form">
         <input type="text" id="new-todo" placeholder="明日の予定を入力" />
         <button type="submit">追加</button>
       </form>
     </section>
+
+    <!-- 自己ルールチェックセクション -->
+    <section id="rule-section">
+      <h2>✅ 自己ルール</h2>
+      <ul id="rule-list" class="item-list"></ul>
+      <form id="rule-form">
+        <input type="text" id="new-rule" placeholder="自己ルールを追加" />
+        <button type="submit">追加</button>
+      </form>
+    </section>
   </main>
 
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" src="js/asset.js"></script>
-  <script type="module" src="js/base.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
